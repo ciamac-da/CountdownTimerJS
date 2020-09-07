@@ -25,8 +25,12 @@
         const clock = document.querySelector(".clock");
         let timeInterval;
         let timeStop = true;
-
-
+        const saveValue = localStorage.getItem("countdown") || false;
+        if (saveValue) {
+            startClock(saveValue);
+            let inputValue = new Date(saveValue);
+            endDate.valueAsDate = inputValue;
+        }
         // giving date an change event 
         endDate.addEventListener("change", function (e) {
             // using preventDefault to avoid default features of our event
@@ -39,29 +43,28 @@
             timeStop = true;
         });
 
-        function startClock(d){
+        function startClock(d) {
             function updateCounter() {
                 let tl = (timeLeft(d));
-                if (tl.total <= 0){
+                if (tl.total <= 0) {
                     timeStop = false
                 }
-                for (let pro in tl){
-                    let el = clock.querySelector("."+ pro)
-                    if(el){
+                for (let pro in tl) {
+                    let el = clock.querySelector("." + pro)
+                    if (el) {
                         el.innerHTML = tl[pro]
                     }
                 }
             }
             updateCounter();
-            if(timeStop){
+            if (timeStop) {
                 timeInterval = setInterval(updateCounter, 1000)
-            }
-            else {
+            } else {
                 clearInterval(timeInterval)
             }
         }
-    // to define how much time left
-        function timeLeft(d){
+        // to define how much time left
+        function timeLeft(d) {
             console.log(d);
             // Current date
             let currentDate = new Date();
@@ -70,10 +73,10 @@
 
             let seconds = Math.floor((t / 1000) % 60);
             let minutes = Math.floor(((t / 1000) / 60) % 60);
-            let hours = Math.floor((t / (1000 *60 * 60) % 24));
+            let hours = Math.floor((t / (1000 * 60 * 60) % 24));
             let days = Math.floor(t / (1000 * 60 * 60 * 24));
 
-// to make an object
+            // to make an object
             return {
                 "total": t,
                 "days": days,
@@ -84,8 +87,6 @@
 
 
         }
-
-
     </script>
 </body>
 
