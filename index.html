@@ -19,14 +19,52 @@
         </div>
     </div>
     <script>
+        //catching input
         const endDate = document.querySelector("input[name='endDate']");
+        // catching clock
         const clock = document.querySelector(".clock");
 
+        // giving date an change event 
         endDate.addEventListener("change", function (e) {
+            // using preventDefault to avoid default features of our event
             e.preventDefault();
             console.log(endDate.value);
-
+            // To get choosen date
+            const temp = new Date(endDate.value)
+            // Calling startClock function
+            startClock(temp)
         });
+
+        function startClock(d){
+            console.log(timeLeft(d));
+        }
+    // to define how much time left
+        function timeLeft(d){
+            console.log(d);
+            // Current date
+            let currentDate = new Date();
+            // date  - current
+            let t = Date.parse(d) - Date.parse(currentDate);
+
+            let seconds = Math.floor((t / 1000) % 60);
+            let minutes = Math.floor(((t / 1000) / 60) % 60);
+            let hours = Math.floor(((t / 1000) * 60) % 24);
+            let days = Math.floor(t / (1000 * 60 * 60 * 24));
+
+// to make an object
+            return {
+                "total": t,
+                "days": days,
+                "hours": hours,
+                "minutes": minutes,
+                "seconds": seconds,
+
+            }
+
+
+        }
+
+
     </script>
 </body>
 
